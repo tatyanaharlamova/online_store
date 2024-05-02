@@ -1,3 +1,5 @@
+import json
+
 from django.shortcuts import render
 
 
@@ -6,15 +8,13 @@ def home(request):
 
 
 def contacts(request):
-    return render(request, 'contacts.html')
-
-
-def save_users_data(request):
     if request.method == "POST":
         name = request.POST.get("name")
         phone = request.POST.get("phone")
         message = request.POST.get("message")
-        print(name, phone, message)
+        contacts_dict = {"name": name, "phone": phone, "message": message[:]}
+
+        with open("contacts.json", "w") as file:
+            json.dump(contacts_dict, file, ensure_ascii=False, indent=4)
 
     return render(request, 'contacts.html')
-
