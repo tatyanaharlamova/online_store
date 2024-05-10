@@ -55,7 +55,6 @@ class Product(models.Model):
     updated_at = models.DateTimeField(
         auto_now=True, verbose_name="Дата последнего изменения"
     )
-    manufactured_at = models.DateTimeField(verbose_name="Дата производства продукта", null=True, blank=True)
 
     def __str__(self):
         return self.name
