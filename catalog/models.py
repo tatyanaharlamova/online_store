@@ -48,7 +48,7 @@ class Product(models.Model):
         help_text="Введите категорию товара",
         null=True,
         blank=True,
-        related_name='products'
+        related_name="products",
     )
     price = models.PositiveIntegerField(verbose_name="Цена", null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True, verbose_name="Дата создания")
@@ -63,3 +63,28 @@ class Product(models.Model):
         verbose_name = "Продукт"
         verbose_name_plural = "Продукты"
         ordering = ["name", "category"]
+
+
+class Contact(models.Model):
+    name = models.CharField(
+        max_length=100,
+        verbose_name="Имя",
+    )
+    phone = models.CharField(
+        max_length=50,
+        verbose_name="Телефон",
+        null=True,
+        blank=True,
+    )
+    message = models.TextField(
+        verbose_name="Сообщение",
+        null=True,
+        blank=True,
+    )
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name = "Контакт"
+        verbose_name_plural = "Контакты"
