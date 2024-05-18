@@ -1,3 +1,4 @@
+# Кастомная команда для заполнения базы данных из фикстур с категориями и продуктами
 import json
 
 from django.core.management import BaseCommand
@@ -25,6 +26,9 @@ class Command(BaseCommand):
             return products
 
     def handle(self, *args, **options):
+        """
+        Заполнение базы данных.
+        """
         Product.objects.all().delete()
         Category.objects.all().delete()
 
