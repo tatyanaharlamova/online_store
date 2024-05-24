@@ -1,0 +1,24 @@
+{% extends 'catalog/base.html'%}
+{% load my_tags %}
+{% block content %}
+<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+    {% for product in object_list %}
+    <div class="col-3 p-1">
+        <div class="card shadow-sm">
+            <div style="width: 300px; height: 280px; overflow: hidden;">
+                <img src="{{ product.preview | media_filter }} " alt="обрезанное изображение" style="object-fit: cover; width: 100%; height: 100%;">
+            </div>
+            <div class="card-body">
+                <p class="card-text">{{ product.name}}</p>
+                <p class="card-text">Описание: {{ product.description|slice:100}}</p>
+                <div class="d-flex justify-content-between align-items-center">
+                    <div class="btn-group">
+                        <a class="btn btn-primary" href="{% url 'catalog:products_detail' product.pk %}" role="button">Просмотр</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}
