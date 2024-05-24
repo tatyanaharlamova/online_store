@@ -1,39 +1,37 @@
 import json
 
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render
+from django.urls import reverse_lazy
+from django.views.generic import ListView, DetailView, CreateView
 
-from catalog.models import Product
+from catalog.models import Product, Contact
 
 
-def home(request):
+class ProductListView(ListView):
     """
-    Контроллер, который отвечает за отображение домашней страницы
+    Контроллер, который отвечает за отображение списка продуктов
     """
-    product = Product.objects.all()
-    context = {'products': product}
-    return render(request, "products_list.html", context)
+    model = Product
 
 
-def contacts(request):
-    """
-    Контроллер, который отвечает за отображение контактной информации
-    """
-    if request.method == "POST":
-        name = request.POST.get("name")
-        phone = request.POST.get("phone")
-        message = request.POST.get("message")
-        contacts_dict = {"name": name, "phone": phone, "message": message[:]}
-
-        with open("contacts.json", "w") as file:
-            json.dump(contacts_dict, file, ensure_ascii=False, indent=4)
-
-    return render(request, 'contacts.html')
-
-
-def products_detail(request, pk):
+class ProductDetailView(DetailView):
     """
     Контроллер, который отвечает за отображение информации о конкретном продукте
     """
-    product = get_object_or_404(Product, pk=pk)
-    context = {'product': product}
-    return render(request, 'products_detail.html', context)
+    model = Product
+
+
+class ContactCreateView(CreateView):
+    """
+    Контроллер, который отвечает за отображение контактной информации
+    """
+    model = Contact
+    fields = (
+        "name",
+        "phone",
+        "message",
+    )
+    success_url = reverse_lazy("catalog:contacts")
+
+
+
