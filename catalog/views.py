@@ -1,6 +1,3 @@
-import json
-
-from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView
 
@@ -32,6 +29,3 @@ class ContactCreateView(CreateView):
         "message",
     )
     success_url = reverse_lazy("catalog:contacts")
-
-
-
