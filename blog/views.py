@@ -2,6 +2,7 @@ from django.urls import reverse_lazy, reverse
 from django.views.generic import CreateView, ListView, DetailView, UpdateView, DeleteView
 from pytils.translit import slugify
 
+from blog.forms import BlogArticleForm
 from blog.models import BlogArticle
 
 
@@ -10,7 +11,7 @@ class BlogArticleCreateView(CreateView):
     Контроллер, который отвечает за создание статьи блога
     """
     model = BlogArticle
-    fields = ('title', 'body', 'preview', )
+    form_class = BlogArticleForm
     success_url = reverse_lazy('blog:list')
 
     def form_valid(self, form):
@@ -51,7 +52,7 @@ class BlogArticleUpdateView(UpdateView):
     Контроллер, который отвечает за редактирование статьи блога
     """
     model = BlogArticle
-    fields = ('title', 'body', 'preview', )
+    form_class = BlogArticleForm
 
     def form_valid(self, form):
         if form.is_valid():
