@@ -1,4 +1,4 @@
-from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.exceptions import PermissionDenied
 from django.forms import inlineformset_factory
 from django.urls import reverse_lazy, reverse
@@ -6,7 +6,7 @@ from django.views.generic import ListView, DetailView, CreateView, UpdateView, D
 
 from catalog.forms import ProductForm, VersionForm, VersionFormSet, ProductModeratorForm
 from catalog.models import Product, Contact, Version, Category
-from catalog.services import get_categories_from_cache
+from catalog.services import get_categories_from_cache, get_products_from_cache
 
 
 class ProductListView(ListView):
@@ -30,6 +30,9 @@ class ProductListView(ListView):
 
         context_data['object_list'] = list_product
         return context_data
+
+    def get_queryset(self):
+        return get_products_from_cache()
 
 
 class ProductDetailView(DetailView):
@@ -116,7 +119,7 @@ class CategoryListView(LoginRequiredMixin, ListView):
     model = Category
 
     def get_queryset(self):
-        get_categories_from_cache()
+        return get_categories_from_cache()
 
 
 class ContactCreateView(CreateView):
