@@ -15,6 +15,7 @@ django-stubs = "^5.0.0"
 flake8 = "^7.0.0"
 pytils = "^0.4.1"
 django = "4.2.2"
+redis = "^5.0.6"
 
 
 [build-system]
