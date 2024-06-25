@@ -5,7 +5,8 @@ from django.urls import reverse_lazy, reverse
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 
 from catalog.forms import ProductForm, VersionForm, VersionFormSet, ProductModeratorForm
-from catalog.models import Product, Contact, Version
+from catalog.models import Product, Contact, Version, Category
+from catalog.services import get_categories_from_cache
 
 
 class ProductListView(ListView):
@@ -106,6 +107,16 @@ class ProductDeleteView(LoginRequiredMixin, DeleteView):
         if self.request.user == self.object.owner or self.request.user.is_superuser:
             return self.object
         raise PermissionDenied
+
+
+class CategoryListView(LoginRequiredMixin, ListView):
+    """
+    Контроллер, который отвечает за отображение списка категорий
+    """
+    model = Category
+
+    def get_queryset(self):
+        get_categories_from_cache()
 
 
 class ContactCreateView(CreateView):
